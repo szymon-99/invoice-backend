@@ -6,6 +6,8 @@
 # Dependency directories
 node_modules/
 jspm_packages/
+.vscode
+
 
 # TypeScript cache
 *.tsbuildinfo
