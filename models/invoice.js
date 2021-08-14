@@ -3,48 +3,56 @@ const mongoose = require('mongoose');
 const itemSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'item name must be provied'],
+    // required: [true, 'item name must be provied'],
   },
-  quantity: {
+  qty: {
     type: Number,
-    required: [true, 'item quantity must bo provided'],
+    // required: [true, 'item quantity must bo provided'],
   },
   price: {
     type: Number,
-    required: [true, 'item price must be provided'],
+    // required: [true, 'item price must be provided'],
   },
 });
 
 const invoiceSchema = new mongoose.Schema({
   userInfo: {
-    street: { type: String },
-    city: { type: String },
-    postCode: { type: String },
-    country: { type: String },
+    street: { type: String, default: '' },
+    city: { type: String, default: '' },
+    postCode: { type: String, default: '' },
+    country: { type: String, default: '' },
   },
   clientInfo: {
-    name: { type: String },
-    email: { type: String },
-    street: { type: String },
-    city: { type: String },
-    postCode: { type: String },
-    country: { type: String },
+    name: { type: String, default: '' },
+    email: { type: String, default: '' },
+    street: { type: String, default: '' },
+    city: { type: String, default: '' },
+    postCode: { type: String, default: '' },
+    country: { type: String, default: '' },
   },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
-  paymentDue: {
-    type: Number,
+  desc: {
+    type: String,
+    default: '',
+  },
+  paymentDate: {
+    type: Date,
   },
   itemList: {
     type: [itemSchema],
-    default: undefined,
+    default: [],
   },
   status: {
     type: String,
     enum: ['draft', 'pending', 'paid'],
     default: 'draft',
+  },
+  total: {
+    type: Number,
+    default: 0,
   },
 });
 

@@ -2,7 +2,8 @@ require('dotenv').config();
 require('express-async-errors');
 
 const connectDB = require('./db');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
+const cors = require('cors');
 
 const { errorHandlerMiddleware, notFoundMiddleware } = require('./middleware');
 
@@ -11,6 +12,7 @@ const express = require('express');
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 //routes
 app.use('/api/invoices', router);

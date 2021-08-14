@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { calculateTotals, paymentDateModifier } = require('../middleware');
 
 const {
   getAllInvoices,
@@ -9,7 +10,10 @@ const {
   deleteInvoice,
 } = require('../controllers');
 
-router.route('/').get(getAllInvoices).post(createInvoice);
+router
+  .route('/')
+  .get(getAllInvoices)
+  .post(calculateTotals, paymentDateModifier, createInvoice);
 router
   .route('/:id')
   .get(getSingleInvoice)

@@ -1,22 +1,53 @@
 const { StatusCodes } = require('http-status-codes');
 const Invoice = require('../models/invoice');
+const { NotFoundError } = require('../errors');
 
 const getAllInvoices = async (req, res) => {
-  const invoices = await Invoice.find({});
-  res.status(StatusCodes.OK).json({ message: 'getAllInvoices', invoices });
+  const invoices = await Invoice.find({}).sort('-createdAt');
+
+  res.status(StatusCodes.OK).json({ invoices });
 };
+
 const createInvoice = async (req, res) => {
-  const createdInvoice = await Invoice.create(req.body);
-  res.status(StatusCodes.OK).json({ message: 'createInvoice', createdInvoice });
+  const invoice = await Invoice.create(req.body);
+
+  res.status(StatusCodes.CREATED).json({ invoice });
 };
+
 const getSingleInvoice = async (req, res) => {
-  res.status(StatusCodes.OK).json({ message: 'getSingleInvoice' });
+  const { id: invoiceId } = req.params;
+
+  const invoice = await Invoice.findById(invoiceId);
+
+  if (!invoice) {
+    throw new NotFoundError(`Invoice with id: ${invoiceId} doesn't exist`);
+  }
+
+  res.status(StatusCodes.OK).json({ invoice });
 };
+
 const updateInvoice = async (req, res) => {
-  res.status(StatusCodes.OK).json({ message: 'updateInvoice' });
+  const { id: invoiceId } = req.params;
+
+  const invoice = await Invoice.findByIdAndUpdate(invoiceId, req.body);
+
+  if (!invoice) {
+    throw new NotFoundError(`Invoice with id: ${invoiceId} doesn't exist`);
+  }
+
+  res.status(StatusCodes.OK).json({ invoice });
 };
+
 const deleteInvoice = async (req, res) => {
-  res.status(StatusCodes.OK).json({ message: 'deleteInvoice' });
+  const { id: invoiceId } = req.params;
+
+  const invoice = await Invoice.findByIdAndDelete(invoiceId);
+
+  if (!invoice) {
+    throw new NotFoundError(`Invoice with id: ${invoiceId}, doesn't exist`);
+  }
+
+  res.status(StatusCodes.OK).json({ message: 'Success' });
 };
 
 module.exports = {
