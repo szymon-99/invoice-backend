@@ -3,15 +3,17 @@ const Invoice = require('../models/invoice');
 const { NotFoundError } = require('../errors');
 
 const getAllInvoices = async (req, res) => {
+  // await Invoice.deleteMany({});
+
   const invoices = await Invoice.find({}).sort('-createdAt');
 
-  res.status(StatusCodes.OK).json({ invoices });
+  res.status(StatusCodes.OK).json(invoices);
 };
 
 const createInvoice = async (req, res) => {
   const invoice = await Invoice.create(req.body);
 
-  res.status(StatusCodes.CREATED).json({ invoice });
+  res.status(StatusCodes.CREATED).json(invoice);
 };
 
 const getSingleInvoice = async (req, res) => {
@@ -23,7 +25,7 @@ const getSingleInvoice = async (req, res) => {
     throw new NotFoundError(`Invoice with id: ${invoiceId} doesn't exist`);
   }
 
-  res.status(StatusCodes.OK).json({ invoice });
+  res.status(StatusCodes.OK).json(invoice);
 };
 
 const updateInvoice = async (req, res) => {

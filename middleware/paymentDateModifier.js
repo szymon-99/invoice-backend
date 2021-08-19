@@ -20,7 +20,7 @@ const paymentDateModifier = (req, res, next) => {
   if (paymentDue === 'next 30 days') {
     date.setDate(date.getDate() + 30);
   }
-  req.body.paymentDate = date;
+  req.body.paymentDue = date;
 
   next();
 };

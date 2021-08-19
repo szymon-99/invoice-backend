@@ -17,7 +17,7 @@ router
 router
   .route('/:id')
   .get(getSingleInvoice)
-  .patch(updateInvoice)
+  .patch(calculateTotals, paymentDateModifier, updateInvoice)
   .delete(deleteInvoice);
 
 module.exports = router;

@@ -32,13 +32,12 @@ const invoiceSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
   },
   desc: {
     type: String,
     default: '',
   },
-  paymentDate: {
+  paymentDue: {
     type: Date,
   },
   itemList: {
