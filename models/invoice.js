@@ -31,7 +31,11 @@ const invoiceSchema = new mongoose.Schema({
     country: { type: String, default: '' },
   },
   createdAt: {
+    type: String,
+  },
+  initializedIn: {
     type: Date,
+    default: Date.now(),
   },
   desc: {
     type: String,

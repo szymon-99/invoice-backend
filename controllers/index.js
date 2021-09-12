@@ -5,7 +5,7 @@ const { NotFoundError } = require('../errors');
 const getAllInvoices = async (req, res) => {
   // await Invoice.deleteMany({});
 
-  const invoices = await Invoice.find({}).sort('-createdAt');
+  const invoices = await Invoice.find({}).sort('paymentDue');
 
   res.status(StatusCodes.OK).json(invoices);
 };
@@ -31,13 +31,15 @@ const getSingleInvoice = async (req, res) => {
 const updateInvoice = async (req, res) => {
   const { id: invoiceId } = req.params;
 
-  const invoice = await Invoice.findByIdAndUpdate(invoiceId, req.body);
+  const invoice = await Invoice.findByIdAndUpdate(invoiceId, req.body, {
+    new: true,
+  });
 
   if (!invoice) {
     throw new NotFoundError(`Invoice with id: ${invoiceId} doesn't exist`);
   }
 
-  res.status(StatusCodes.OK).json({ invoice });
+  res.status(StatusCodes.OK).json(invoice);
 };
 
 const deleteInvoice = async (req, res) => {
