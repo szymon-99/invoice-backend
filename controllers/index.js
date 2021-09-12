@@ -3,8 +3,6 @@ const Invoice = require('../models/invoice');
 const { NotFoundError } = require('../errors');
 
 const getAllInvoices = async (req, res) => {
-  // await Invoice.deleteMany({});
-
   const invoices = await Invoice.find({}).sort('paymentDue');
 
   res.status(StatusCodes.OK).json(invoices);
